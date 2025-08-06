@@ -1,5 +1,7 @@
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
+import { useLocalStorage } from "../components/save/SaveLocal";
+import SaveLocal from "../components/save/SaveLocal";
 
 interface Todo {
     id: number;
@@ -8,7 +10,7 @@ interface Todo {
 }
 
 export default function Inicio() {
-    const [todos, setTodos] = useState<Todo[]>([]);
+    const [todos, setTodos] = useLocalStorage<Todo[]>("todos", []);
     const [newTodo, setNewTodo] = useState("");
 
     const addTodo = (e: React.FormEvent) => {
@@ -46,6 +48,9 @@ export default function Inicio() {
                     <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
                         📝 Todo List
                     </h1>
+
+                    {/* Componente de guardado local */}
+                    <SaveLocal todos={todos} />
 
                     {/* Formulario para agregar tareas */}
                     <form onSubmit={addTodo} className="mb-6">
